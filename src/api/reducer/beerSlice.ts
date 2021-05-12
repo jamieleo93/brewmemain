@@ -16,6 +16,7 @@ interface beerState {
       brewers_tips?: string;
     }
   ];
+  isLoading: boolean;
 }
 
 // Define the initial state using that type
@@ -33,6 +34,7 @@ const initialState: beerState = {
       brewers_tips: "",
     },
   ],
+  isLoading: false
 };
 
 export const beerSlice = createSlice({
@@ -42,24 +44,31 @@ export const beerSlice = createSlice({
     allBeers: (state, action: PayloadAction<any>) => {
       state.allBeers = action.payload;
     },
+    isLoading: (state, action: PayloadAction<any>) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { allBeers } = beerSlice.actions;
+export const { allBeers, isLoading } = beerSlice.actions;
 
 export function fetchBeers() {
   return (dispatch: Dispatch) => {
+    dispatch(isLoading(true));
     axios
       .get("https://api.punkapi.com/v2/beers/random")
       .then(function (response) {
         dispatch(allBeers(response.data));
+        dispatch(isLoading(false));
       })
       .catch(function (error) {
         // handle error
         console.log(error);
+        dispatch(isLoading(false));
       });
   };
 }
 
 export const beerSelector = (state: RootState) => state.allBeers;
+export const loadingSelector = (state: RootState) => state.isLoading;
 export default beerSlice.reducer;

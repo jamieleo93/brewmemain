@@ -4,6 +4,7 @@ import { beerSlice } from "./reducer/beerSlice";
 const store = configureStore({
   reducer: {
     allBeers: beerSlice.reducer,
+    isLoading: beerSlice.reducer
   },
 });
 

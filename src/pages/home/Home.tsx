@@ -6,13 +6,15 @@ import "./Home.css";
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const { allBeers } = useAppSelector(beerSelector);
+  const { allBeers, isLoading } = useAppSelector(beerSelector);
 
   useEffect(() => {
     dispatch(fetchBeers());
   }, [dispatch]);
-  console.log(allBeers);
-
+  
+if(isLoading) {
+  return <div className="container container-center container-100"><div className="lds-ripple"><div></div><div></div></div></div>
+} else {
   return (
     <div className="container container-bg-angle">
       <h2 className="heading-bold">Brew Me</h2>
@@ -43,4 +45,5 @@ export default function Home() {
       </div>
     </div>
   );
+      }
 }
