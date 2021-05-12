@@ -38,7 +38,7 @@ export default function Card({
           <span className="card__heading">Details</span>
           <div className="card__back-info">
             <p>
-              <strong>Description</strong> {description}
+              <strong>Description</strong> {description.substring(0, 450)}
             </p>
             <p>
               <strong>First Brewed:</strong> {firstBrew}
