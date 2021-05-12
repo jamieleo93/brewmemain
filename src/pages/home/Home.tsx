@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../api/hooks';
-import { beerSelector, fetchBeers } from '../../api/reducer/beerSlice';
-import Card from '../../components/card/Card';
-import './Home.css';
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../api/hooks";
+import { beerSelector, fetchBeers } from "../../api/reducer/beerSlice";
+import Card from "../../components/card/Card";
+import "./Home.css";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -11,16 +11,35 @@ export default function Home() {
   useEffect(() => {
     dispatch(fetchBeers());
   }, [dispatch]);
-  console.log(allBeers)
+  console.log(allBeers);
 
   return (
     <div className="container container-bg-angle">
       <h2 className="heading-bold">Brew Me</h2>
       <div className="container-center">
-      {allBeers.map((beer) => {
-        
-        return <Card key={beer.id} name={beer.name} image={beer.image_url}/>
-      })}
+        {allBeers.map((beer) => {
+          return (
+            <Card
+              key={beer.id}
+              name={beer.name}
+              description={beer.description}
+              image={beer.image_url}
+              tagline={beer.tagline}
+              alcohol={beer.abv}
+              firstBrew={beer.first_brewed}
+              tips={beer.brewers_tips}
+            />
+          );
+        })}
+        <footer>
+          <p>
+            Random ideas by{" "}
+            <a href="http://jamiehammond.dev" target="_blank" rel="noreferrer">
+              Jamie Hammond
+            </a>
+            .
+          </p>
+        </footer>
       </div>
     </div>
   );

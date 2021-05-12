@@ -1,45 +1,51 @@
-import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit'
-import type { RootState } from '../store';
-import axios from 'axios';
+import { createSlice, PayloadAction, Dispatch } from "@reduxjs/toolkit";
+import type { RootState } from "../store";
+import axios from "axios";
 // Define a type for the slice state
 interface beerState {
-  allBeers: [ 
+  allBeers: [
     {
       id: number;
       name: string;
       tagline?: string;
-      alcohol?: number;
+      abv?: number;
       tips?: string;
       description?: string;
       image_url?: string;
-    } 
-  ]
+      first_brewed?: string;
+      brewers_tips?: string;
+    }
+  ];
 }
 
 // Define the initial state using that type
 const initialState: beerState = {
-  allBeers: [{
+  allBeers: [
+    {
       id: 0,
       name: "name",
       tagline: "tagline",
-      alcohol: 0,
+      abv: 0,
       tips: "tips",
       description: "description",
-      image_url: ""
-  }]
-}
+      image_url: "",
+      first_brewed: "",
+      brewers_tips: "",
+    },
+  ],
+};
 
 export const beerSlice = createSlice({
-  name: 'iceColdBeers',
+  name: "iceColdBeers",
   initialState,
   reducers: {
     allBeers: (state, action: PayloadAction<any>) => {
-      state.allBeers = action.payload
-    }
+      state.allBeers = action.payload;
+    },
   },
-})
+});
 
-export const { allBeers } = beerSlice.actions
+export const { allBeers } = beerSlice.actions;
 
 export function fetchBeers() {
   return (dispatch: Dispatch) => {
@@ -55,5 +61,5 @@ export function fetchBeers() {
   };
 }
 
-export const beerSelector = (state: RootState) => state.allBeers
+export const beerSelector = (state: RootState) => state.allBeers;
 export default beerSlice.reducer;
